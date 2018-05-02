@@ -105,5 +105,3 @@ database.ref("/employeeData").on("value", function (snapshot) {
 
 
 
-
-
