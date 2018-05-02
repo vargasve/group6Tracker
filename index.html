@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Employee Data Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!--   <link rel="icon" type="image/ico" sizes="32x32" href="favicon-smile-o.ico">
+ -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Navbar</a>
+                    </div>
+    </nav>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Employee Time!</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron
+                and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="schedule-wrapper">
+<h2>Current Employees</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Role</th>
+                                <th>Start Date</th>
+                                <th>Months Worked</th>
+                                <th>Monthly Rate ($)</th>
+                                <th>Total Billed ($)</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="employee-info">
+                            <tr>
+                                <td>Cell</td>
+                                <td>Cell</td>
+                                <td>Cell</td>
+                                <td>Cell</td>
+                                <td>Cell</td>
+                                <td>Cell</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div id="form-wrapper">
+                    <h2>Add Employee</h2>
+                    <form id="employee-form">
+                        <div class="form-group">
+                            <label for="employee-name">Employee Name</label>
+                            <input type="text" class="form-control" id="employee-name" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="employee-role">Role</label>
+                            <input type="text" class="form-control" id="employee-role" placeholder="i.e. Janitor">
+                        </div>
+                        <div class="form-group">
+                            <label for="employee-time-first">Start Date (DD/MM/YY - ex 01/01/89)</label>
+                            <input type="text" class="form-control" id="employee-startdate" placeholder="01/01/89">
+                        </div>
+                        <div class="form-group">
+                            <label for="employee-frequency">Monthly Rate</label>
+                            <input type="number" class="form-control" id="employee-monthlyrate" placeholder="25">
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="submit">Submit form</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+    </footer>
+</body>
+<script src="assets/javascript/app.js"></script>
+
+</html>
