@@ -56,6 +56,7 @@ $("#submit").on("click", function (event) {
     var employeeStartDate = $("#employee-startdate").val().trim();
     var employeeMonthlyRate = $("#employee-monthlyrate").val().trim();
 
+
     database.ref("/employeeData").push({
         employeeName: employeeName,
         employeeRole: employeeRole,
@@ -84,9 +85,12 @@ database.ref("/employeeData").on("value", function (snapshot) {
         var employeeStartDate = childSnapshot.val().employeeStartDate;
         var employeeMonthlyRate = childSnapshot.val().employeeMonthlyRate;
 
+
+
         console.log(employeeStartDate);
 
         var startDate = new Date(employeeStartDate);
+        employeeStartDate = moment(startDate).format("MM-DD-YYYY");
         var currentDate = new Date();
 
         console.log(currentDate);
@@ -103,7 +107,6 @@ database.ref("/employeeData").on("value", function (snapshot) {
             employeeBilled = "$" + employeeBilled;
             employeeMonthlyRate = "$" + employeeMonthlyRate;
         }
-
 
         console.log("employeeBilled:  " + employeeBilled);
         // Show form stuff
