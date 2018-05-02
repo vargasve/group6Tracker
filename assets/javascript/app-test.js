@@ -6,18 +6,11 @@ var config = {
     projectId: "employeedata-b6f55",
     storageBucket: "employeedata-b6f55.appspot.com",
     messagingSenderId: "454826337302"
-};
-firebase.initializeApp(config);
+  };
+  firebase.initializeApp(config);
 
 // Create a variable to reference the database.
 var database = firebase.database();
-
-// Initial variables
-
-var employeeName = "";
-var employeeRole = "";
-var employeeStartDate = 0;
-var employeeMonthlyRate = 0;
 
 // -----------------------------
 
@@ -41,6 +34,7 @@ connectedRef.on("value", function (snap) {
 // When first loaded or when the connections list changes...
 connectionsRef.on("value", function (snap) {
 
+
 });
 
 // --------------------------------------------------------------
@@ -63,6 +57,7 @@ $("#submit").on("click", function (event) {
         employeeMonthlyRate: employeeMonthlyRate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
+
 });
 
 // Clear form
@@ -70,35 +65,48 @@ $("#submit").on("click", function (event) {
     $("#employee-form")[0].reset();
 });
 
-database.ref("/employeeData").on("child_added", function (snapshot) {
+// !!!! THIS NEEDS TO CHANGE.
+
+// database.ref("/employeeData").on("value", function (snapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
 
 
-    //month and bill calculation
-    console.log(employeeStartDate);
-    var startDate = new Date(employeeStartDate);
-    var currentDate = new Date();
-    console.log(currentDate);
-    var employeeMonthsWorked = Math.floor(moment(startDate).diff(moment(currentDate), 'months', true) * -1);
-    console.log("employeeMonthsWorked:  " + employeeMonthsWorked);
-    var employeeBilled = employeeMonthsWorked * employeeMonthlyRate;
-    console.log("employeeBilled:  " + employeeBilled);
+    // ------------------------------------
 
-    // Show form stuff
+    $("#employee-info").empty();
 
-    var sv = snapshot.val();
+    snapshot.forEach(function (childSnapshot) {
 
-    var newRow = $("<tr>");
-    var employeeNameDisplay = $("<td>").text(sv.employeeName);
-    var employeeRoleDisplay = $("<td>").text(sv.employeeRole);
-    var employeeStartDateDisplay = $("<td>").text(sv.employeeStartDate);
-    var employeeMonthsWorkedDisplay = $("<td>").text(employeeMonthsWorked);
-    var employeeMonthlyRateDisplay = $("<td>").text("$" + sv.employeeMonthlyRate);
-    var employeeBilledDisplay = $("<td>").text("$" + employeeBilled);
+        //check for valid child
+        if (!childSnapshot.child("employeeName").exists()) {
+            return;
+        }
+        var employeeName = childSnapshot.val().employeeName;
+        var employeeRole = childSnapshot.val().employeeRole;
+        var employeeStartDate = childSnapshot.val().employeeStartDate;
+        var employeeMonthlyRate = childSnapshot.val().employeeMonthlyRate;
 
-    newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeMonthlyRateDisplay, employeeBilledDisplay);
-    $("#employee-info").append(newRow);
+        // Show form stuff
 
+        var newRow = $("<tr>");
+        var employeeNameDisplay = $("<td>").text(employeeName);
+        var employeeRoleDisplay = $("<td>").text(employeeRole);
+        var employeeStartDateDisplay = $("<td>").text(employeeStartDate);
+        var employeeMonthsWorkedDisplay = $("<td>").text("stuff goes here");
+        var employeeMonthlyRateDisplay = $("<td>").text(employeeMonthlyRate);
+        var employeeBilledDisplay = $("<td>").text("more stuff");
+
+
+        newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeMonthlyRateDisplay, employeeBilledDisplay);
+        $("#employee-info").append(newRow);
+
+    });
 
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
+
+
+
+
+
