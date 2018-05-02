@@ -1,6 +1,19 @@
+.jumbotron{
+  background: url(https://media.giphy.com/media/PlAWc2MPzThHW/giphy.gif) no-repeat center fixed;
+  background-size: cover;
+}
+
+h1, h2{
+  font-family: "Syncopate", sans-serif;
+}
+{
+  font-family: "Syncopate", sans-serif;
+}
+p, #schedule-wrapper{
+  font-family: "Open Sans", sans-serif;
+}
+
 #form-wrapper { margin-bottom: 30px;}
-
-
 
 /* Sticky footer styles
 -------------------------------------------------- */
