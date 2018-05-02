@@ -34,9 +34,7 @@ connectedRef.on("value", function (snap) {
 // When first loaded or when the connections list changes...
 connectionsRef.on("value", function (snap) {
 
-    // Display the viewer count in the html.
-    // The number of online users is the number of children in the connections list.
-    //  $("#connected-viewers").text(snap.numChildren());
+
 });
 
 // --------------------------------------------------------------
@@ -50,15 +48,13 @@ $("#submit").on("click", function (event) {
     var employeeName = $("#employee-name").val().trim();
     var employeeRole = $("#employee-role").val().trim();
     var employeeStartDate = $("#employee-startdate").val().trim();
-    var employeeRate = $("#employee-rate").val().trim();
+    var employeeMonthlyRate = $("#employee-monthlyrate").val().trim();
 
-    database.ref("/employeeTimeData").push({
+    database.ref("/employeeData").push({
         employeeName: employeeName,
         employeeRole: employeeRole,
         employeeStartDate: employeeStartDate,
-        employeeMonthsWorked: employeeMonthsWorked,
-        employeeRate: employeeRate,
-        employeeBilled: employeeBilled,
+        employeeMonthlyRate: employeeMonthlyRate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
@@ -69,8 +65,8 @@ $("#submit").on("click", function (event) {
     $("#employee-form")[0].reset();
 });
 
-
-database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+// !!!! THIS NEEDS TO CHANGE.
+database.ref("/employeeData").on("value", function (snapshot) {
 
     // ------------------------------------
 
@@ -93,12 +89,12 @@ database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", functi
         var employeeNameDisplay = $("<td>").text(employeeName);
         var employeeRoleDisplay = $("<td>").text(employeeRole);
         var employeeStartDateDisplay = $("<td>").text(employeeStartDate);
-        var employeeMonthsWorkedDisplay = $("<td>").text(employeeMonthsWorked);
-        var employeeRateDisplay = $("<td>").text(employeeRate);
-        var employeeBilledDisplay = $("<td>").text(employeeBilled);
+        var employeeMonthsWorkedDisplay = $("<td>").text("stuff goes here");
+        var employeeMonthlyRateDisplay = $("<td>").text(employeeMonthlyRate);
+        var employeeBilledDisplay = $("<td>").text("more stuff");
 
 
-        newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeRateDisplay, employeeBilledDisplay);
+        newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeMonthlyRateDisplay, employeeBilledDisplay);
         $("#employee-info").append(newRow);
 
     });
