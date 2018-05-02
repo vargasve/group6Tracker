@@ -70,35 +70,53 @@ $("#submit").on("click", function (event) {
     $("#employee-form")[0].reset();
 });
 
-database.ref("/employeeData").on("child_added", function (snapshot) {
+
+database.ref("/employeeData").on("value", function (snapshot) {
+    // ------------------------------------
+    $("#employee-info").empty();
+    snapshot.forEach(function (childSnapshot) {
+        //check for valid child
+        if (!childSnapshot.child("employeeName").exists()) {
+            return;
+        }
+        var employeeName = childSnapshot.val().employeeName;
+        var employeeRole = childSnapshot.val().employeeRole;
+        var employeeStartDate = childSnapshot.val().employeeStartDate;
+        var employeeMonthlyRate = childSnapshot.val().employeeMonthlyRate;
+
+        console.log(employeeStartDate);
+
+        var startDate = new Date(employeeStartDate);
+        var currentDate = new Date();
+
+        console.log(currentDate);
+        var employeeMonthsWorked = Math.floor(moment(startDate).diff(moment(currentDate), 'months', true) * -1);
+        console.log("employeeMonthsWorked:  " + employeeMonthsWorked);
+
+        var employeeBilled = employeeMonthsWorked * employeeMonthlyRate;
+        if (employeeMonthsWorked < 0 || employeeMonthlyRate === "") {
+            employeeMonthsWorked = "N/A";
+            employeeBilled = "N/A";
+            employeeMonthlyRate = "N/A";
+        } else if (employeeMonthsWorked > 0) {
+            employeeMonthsWorked = employeeMonthsWorked;
+            employeeBilled = "$" + employeeBilled;
+            employeeMonthlyRate = "$" + employeeMonthlyRate;
+        }
 
 
-    //month and bill calculation
-    console.log(employeeStartDate);
-    var startDate = new Date(employeeStartDate);
-    var currentDate = new Date();
-    console.log(currentDate);
-    var employeeMonthsWorked = Math.floor(moment(startDate).diff(moment(currentDate), 'months', true) * -1);
-    console.log("employeeMonthsWorked:  " + employeeMonthsWorked);
-    var employeeBilled = employeeMonthsWorked * employeeMonthlyRate;
-    console.log("employeeBilled:  " + employeeBilled);
-
-    // Show form stuff
-
-    var sv = snapshot.val();
-
-    var newRow = $("<tr>");
-    var employeeNameDisplay = $("<td>").text(sv.employeeName);
-    var employeeRoleDisplay = $("<td>").text(sv.employeeRole);
-    var employeeStartDateDisplay = $("<td>").text(sv.employeeStartDate);
-    var employeeMonthsWorkedDisplay = $("<td>").text(employeeMonthsWorked);
-    var employeeMonthlyRateDisplay = $("<td>").text("$" + sv.employeeMonthlyRate);
-    var employeeBilledDisplay = $("<td>").text("$" + employeeBilled);
-
-    newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeMonthlyRateDisplay, employeeBilledDisplay);
-    $("#employee-info").append(newRow);
-
-
+        console.log("employeeBilled:  " + employeeBilled);
+        // Show form stuff
+        var newRow = $("<tr>");
+        var employeeNameDisplay = $("<td>").text(employeeName);
+        var employeeRoleDisplay = $("<td>").text(employeeRole);
+        var employeeStartDateDisplay = $("<td>").text(employeeStartDate);
+        var employeeMonthsWorkedDisplay = $("<td>").text(employeeMonthsWorked)
+        var employeeMonthlyRateDisplay = $("<td>").text(employeeMonthlyRate);
+        var employeeBilledDisplay = $("<td>").text(employeeBilled);
+        newRow.append(employeeNameDisplay, employeeRoleDisplay, employeeStartDateDisplay, employeeMonthsWorkedDisplay, employeeMonthlyRateDisplay, employeeBilledDisplay);
+        $("#employee-info").append(newRow);
+    });
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
